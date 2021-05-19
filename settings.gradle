@@ -1,0 +1,3 @@
+include ':Location'
+include ':app'
+rootProject.name = "LocationHandler"
