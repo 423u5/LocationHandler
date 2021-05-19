@@ -34,6 +34,10 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+/**
+ * @author Gopal Chaudhary || 423u5
+ * 05-19-2021-05-13-am
+ * */
 public class LocationHandler {
 
     private static final String         TAG                         = LocationHandler.class.getSimpleName();
@@ -57,7 +61,7 @@ public class LocationHandler {
     private LocationListener            mLocationListener;
 
     private int                         mInterval           = 1000;
-    private int                         mLocationPriority   = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+    private int                         mLocationPriority   = LocationRequest.PRIORITY_HIGH_ACCURACY;
     private boolean                     isFirstTimePermissionRequest;
 
     private LocationHandler(Context mContext){
@@ -170,6 +174,8 @@ public class LocationHandler {
                 .addOnConnectionFailedListener(mConnectionFailedListener)
                 .addApi(LocationServices.API)
                 .build();
+
+        connectGoogleClient();
     }
 
     private final GoogleApiClient.ConnectionCallbacks mConnectionCallbacks = new GoogleApiClient.ConnectionCallbacks() {
@@ -179,6 +185,7 @@ public class LocationHandler {
 
             mLocationRequest = new LocationRequest();
             mLocationRequest.setInterval(mInterval);
+            mLocationRequest.setFastestInterval((long) (mInterval/1.5f));
             mLocationRequest.setPriority(mLocationPriority);
 
             LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
